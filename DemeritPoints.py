@@ -23,10 +23,20 @@ class DriverPoints:
         self.lastDate = dt
         self.printString = ""+str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)+" No merit or demerit points.\n"
 
+    @staticmethod
+    def date_diff(d1, d2):
+        assert isinstance(d1, date)
+        assert isinstance(d2, date)
+
+        if (d1.month > d2.month) or (d1.month == d2.month and d1.day >= d2.day):
+            return int(d1.year) - int(d2.year)
+        else:
+            return int(d1.year) - int(d2.year) -1
+
     def demerit(self, dem_dt, dem_points):
         assert isinstance(dem_dt, date)
         assert isinstance(dem_points, int)
-        diff = int(relativedelta(dem_dt, self.lastDate).years)
+        diff = self.date_diff(dem_dt, self.lastDate)
 
         """If a new offense occurs on the same day as a demerit point reduction or merit point award, the
                     reduction/award is done before the new demerit points are given.
